@@ -47,7 +47,10 @@ get_next_token :: (using tokenizer: *Adoc_Tokenizer) -> Token {
     start_t = t;
     char := t.*;
     if char == {
-        case #char "/"; parse_slash_or_comment(tokenizer, *token);
+        case #char "="; parse_heading(tokenizer, *token);
+        case #char "/"; parse_comment(tokenizer, *token);
+        case #char "["; parse_annotation(tokenizer, *token);
+        case #char ":"; parse_variable(tokenizer, *token);
         case;
             token.type = .default;
             t += 1;
@@ -61,15 +64,15 @@ get_next_token :: (using tokenizer: *Adoc_Tokenizer) -> Token {
     return token;
 }
 
-parse_slash_or_comment :: (using tokenizer: *Tokenizer, token: *Token) {
-    slash_count := try_to_eat_slashes(tokenizer);
+parse_comment :: (using tokenizer: *Tokenizer, token: *Token) {
+    slash_count := try_to_eat(tokenizer, #char "/");
     if slash_count < 2 return;
 
     if slash_count >= 4 {
         token.type = .multiline_comment;
         t += 1;
-        while t + 1 < max_t {
-            slash_count = try_to_eat_slashes(tokenizer);
+        while t < max_t {
+            slash_count = try_to_eat(tokenizer, #char "/");
             if slash_count >= 4 break;
             t += 1;
         }
@@ -80,10 +83,38 @@ parse_slash_or_comment :: (using tokenizer: *Tokenizer, token: *Token) {
     }
 }
 
-try_to_eat_slashes :: (using tokenizer: *Tokenizer) -> int {
+parse_heading :: (using tokenizer: *Tokenizer, token: *Token) {
+    heading_count := try_to_eat(tokenizer, #char "=");
+    assert(heading_count >= 1);
+
+    token.type = .type;
+    t += 1;
+    while t < max_t && t.* != #char "\n" t += 1;
+}
+
+parse_annotation :: (using tokenizer: *Tokenizer, token: *Token) {
+    t += 1;
+    if t >= max_t return;
+
+    token.type = .number;
+    t += 1;
+    while t < max_t && t.* != #char "\n" t += 1;
+}
+
+parse_variable :: (using tokenizer: *Tokenizer, token: *Token) {
+    t += 1;
+    if t >= max_t return;
+
+    token.type = .function;
+    // t += 1;
+    while t < max_t && t.* != #char ":" t += 1;
+    t += 1;
+}
+
+try_to_eat :: (using tokenizer: *Tokenizer, $c: u8) -> int {
     slash_count := 0;
     while t + 1 < max_t {
-        if t.* != #char "/" break;
+        if t.* != c break;
         t += 1;
         slash_count += 1;
     }
