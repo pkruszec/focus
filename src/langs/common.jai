@@ -242,6 +242,7 @@ parse_number_c_like :: (using tokenizer: *Tokenizer, token: *$Token) {
 get_lang_from_name :: (lang_name: string) -> Buffer.Lang, found: bool {
     lowercase_name := to_lower_copy(lang_name,, temp);
     if lowercase_name == {
+        case "adoc";         return .Adoc,       true;
         case "jai";          return .Jai,        true;
         case "c";            return .C,          true;
         case "cpp";          return .Cpp,        true;

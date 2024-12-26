@@ -325,6 +325,7 @@ get_language_sample_text :: (lang: Buffer.Lang) -> string {
         case .Plain_Text;        #through;
         case .Focus_Config;      #through;
         case .Focus_Theme;       #through;
+        case .Adoc;              #through;
         case .Focus_Build_Panel;
             panic("Attempted to get a sample for an unsupported buffer language %. This is a bug.", lang);
     }

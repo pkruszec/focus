@@ -67,6 +67,7 @@ get_file_icon :: (name: string, extension: string) -> Icon {
             icon = .audio;
         case "txt";  #through;
         case "md";
+        case "adoc";
             icon = .text;
         case "ttf";  #through;
         case "otf";

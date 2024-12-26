@@ -1272,6 +1272,7 @@ get_lang_from_path :: (full_path: string) -> Buffer.Lang {
     // Get lang from the builtin mapping
     lowercase_extension := to_lower_copy(extension,, temp);
     if lowercase_extension == {
+        case "adoc";            lang = .Adoc;
         case "jai";             lang = .Jai;
         case "cs";              lang = .CSharp;
         case "d";               lang = .D;
@@ -3400,6 +3401,7 @@ toggle_comment :: (editor: *Editor, buffer: *Buffer, is_fallback := false) {
     comment: string = ---;
 
     if #complete buffer.lang == {
+        case .Adoc;   #through;
         case .Jai;    #through;
         case .C;      #through;
         case .Cpp;    #through;
@@ -3618,6 +3620,12 @@ toggle_block_comment :: (editor: *Editor, buffer: *Buffer, is_fallback := false)
     comment_end:   string = ---;
 
     if #complete buffer.lang == {
+    /*
+        case .Adoc;
+            comment_start = "////";
+            comment_end   = "////";
+    */
+
         case .Jai;    #through;
         case .C;      #through;
         case .Cpp;    #through;
@@ -3669,6 +3677,7 @@ toggle_block_comment :: (editor: *Editor, buffer: *Buffer, is_fallback := false)
         case .Plain_Text;        #through;
         case .Todo;              #through;
         case .Focus_Build_Panel;
+        case .Adoc;
             return;
     }
 

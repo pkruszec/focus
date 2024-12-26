@@ -1589,6 +1589,7 @@ manually_mark_range_as_token :: (buffer: *Buffer, range: Offset_Range, color: Co
 
 get_tokenize_function :: (lang: Buffer.Lang) -> Tokenize_Function {
     if #complete lang == {
+        case .Adoc;                 return tokenize_adoc;
         case .Jai;                  return tokenize_jai;
         case .C;                    return tokenize_c;
         case .Cpp;                  return tokenize_cpp;
@@ -1827,6 +1828,7 @@ Buffer :: struct {
 
     Lang :: enum u8 {
         Plain_Text :: 0;
+        Adoc;
         Jai;
         C;
         Cpp;

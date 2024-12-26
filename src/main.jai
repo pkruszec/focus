@@ -982,6 +982,7 @@ focus_allocator: Allocator;
 #load "widgets/color_picker.jai";
 
 #load "langs/common.jai";
+#load "langs/adoc.jai";
 #load "langs/jai.jai";
 #load "langs/c.jai";
 #load "langs/cpp.jai";
@@ -1111,5 +1112,29 @@ DEBUG_MEMORY_LEAKS :: false;
     focus_memcpy :: (dst: *void, src: *void, size: s64) -> *void #foreign libc "memmove";
     libc :: #system_library "libc";
 } else {
-    focus_memcpy :: memcpy;
+    // focus_memcpy :: memcpy;
+    focus_memcpy :: (dp: *void, sp: *void, size: s64) -> *void {
+        dst := cast(*u8) dp;
+        src := cast(*u8) sp;
+
+        if dst >= src {
+            src += size - 1;
+            dst += size - 1;
+            while size > 0 {
+                dst.* = src.*;
+                size -= 1;
+                dst -= 1;
+                src -= 1;
+            }
+        } else {
+            while size > 0 {
+                dst.* = src.*;
+                size -= 1;
+                dst += 1;
+                src += 1;
+            }
+        }
+
+        return dst;
+    }
 }
