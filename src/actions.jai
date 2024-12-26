@@ -192,6 +192,8 @@ ACTIONS_EDITORS :: #run arrays_concat(ACTIONS_COMMON, string.[
     "indentation_convert_to_tabs_for_buffer",
     "indentation_convert_to_spaces_for_buffer",
     "reload_from_disk",
+
+    "pkruszec_mkdir_here",
 ]);
 
 ACTIONS_OPEN_FILE_DIALOG :: #run arrays_concat(ACTIONS_COMMON, string.[

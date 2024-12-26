@@ -1,4 +1,4 @@
-VERSION      :: #run -> string {
+VERSION :: #run -> string {
     result, revision := run_command("git", "rev-parse", "--short", "HEAD", capture_and_return_output = true);
     if revision return sprint("0.3.7-%", trim(revision));
     return "0.3.7-dev";
@@ -46,6 +46,7 @@ build :: () {
             options.null_pointer_check = .ON;
             options.arithmetic_overflow_check = .OFF;
           case "debug";
+            options.backend = .X64;
           case "no_output";
             options.output_type = .NO_OUTPUT;
           case "windows7";

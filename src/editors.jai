@@ -238,6 +238,8 @@ active_editor_handle_event :: (editor: *Editor, buffer: *Buffer, event: Input.Ev
         case .indentation_convert_to_tabs_for_buffer;   indentation_convert_to_tabs_for_buffer  (buffer, editor.buffer_id);
         case .indentation_convert_to_spaces_for_buffer; indentation_convert_to_spaces_for_buffer(buffer, editor.buffer_id);
 
+        // case .pkruszec_mkdir_here; pkruszec_mkdir_here(editor);
+
         // Actions that do something per cursor
         case .move_left;                         move_cursors_left                   (editor, buffer, by = .by_character,           shift_pressed);
         case .move_left_by_character_type;       move_cursors_left                   (editor, buffer, by = .by_character_type,      shift_pressed);
@@ -1268,7 +1270,7 @@ get_lang_from_path :: (full_path: string) -> Buffer.Lang {
     }
 
     // Get lang from the builtin mapping
-    lowercase_extension := to_lower_copy_new(extension,, temp);
+    lowercase_extension := to_lower_copy(extension,, temp);
     if lowercase_extension == {
         case "jai";             lang = .Jai;
         case "cs";              lang = .CSharp;
@@ -3946,7 +3948,7 @@ open_editors: [..] Editor;
 
 // A map from full buffer path to buffer id (only for the open buffers, obviously)
 buffers_table: Table(string, s64,
-                     given_hash_function = x => Hash.get_hash(to_lower_copy_new(x,, temp)),
+                     given_hash_function = x => Hash.get_hash(to_lower_copy(x,, temp)),
                      given_compare_function = platform_path_equals);
 
 most_recent_buffers: [..] s64;  // updated when an editor is activated, used to switch between open files

@@ -192,9 +192,7 @@ wm_char_high_surrogate : u32;
 
 MyWindowProc :: (hwnd: HWND, message: u32,
                  wParam: WPARAM, lParam: LPARAM) -> s64 #c_call {
-    new_context: Context;
-
-    push_context new_context {
+    push_context {
         using Key_Code;
 
   	    if message == {
@@ -411,7 +409,7 @@ MyWindowProc :: (hwnd: HWND, message: u32,
  	 	        ok := DragQueryFileW(drop, i, file_name_wide, file_name_wide_count);
  	 	        assert(ok > 0); // means success
 
-		        file_name := wide_to_utf8_new(file_name_wide,, allocator = temp);
+		        file_name := wide_to_utf8(file_name_wide,, allocator = temp);
  	 	        array_add(*files, file_name);
  	 	    }
 

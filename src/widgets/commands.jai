@@ -206,9 +206,14 @@ base_commands := #run -> [] Command {
         cmd( "Show Troubleshooting Information",  .show_troubleshooting_info,        .None   ),
     ];
 
+    pkruszec_commands := Command.[
+        cmd("Mkdir Here", .pkruszec_mkdir_here, .None),
+    ];
+
     result: [..] Command;
 
     array_add(*result, ..common_commands);
+    array_add(*result, ..pkruszec_commands);
     #if OS == .LINUX then array_add(*result, ..linux_commands);
 
     return result;
