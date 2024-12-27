@@ -109,6 +109,21 @@ parse_variable :: (using tokenizer: *Tokenizer, token: *Token) {
     t += 1;
     if t >= max_t return;
 
+    got_closing_before_newline := false;
+    i := 0;
+    while t + i < max_t && t.* != #char "\n" {
+        if (t + i).* == #char ":" {
+            got_closing_before_newline = true;
+            break;
+        }
+        i += 1;
+    }
+
+    if !got_closing_before_newline {
+        token.type = .default;
+        return;
+    }
+
     token.type = .function;
     // t += 1;
     while t < max_t && t.* != #char ":" t += 1;
