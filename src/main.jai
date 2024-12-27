@@ -296,6 +296,7 @@ main :: () {
                 case .confirm_overwrite_dialog;     handled = dialog_handle_event(*confirm_overwrite_dialog, event);
                 case .commands_dialog;              handled = dialog_handle_event(*commands_dialog, event);
                 case .kill_running_command_dialog;  handled = dialog_handle_event(*kill_running_command_dialog, event);
+                case .snippet_dialog;               handled = snippet_dialog_handle_event(event);
                 case .theme_dialog;                 handled = theme_dialog_handle_event(event);
                 case .language_dialog;              handled = language_dialog_handle_event(event);
             }
@@ -904,6 +905,7 @@ Active_Global_Widget :: enum {
     kill_running_command_dialog;
     theme_dialog;
     language_dialog;
+    snippet_dialog;
 }
 
 Project_Dir :: struct {
@@ -963,6 +965,7 @@ focus_allocator: Allocator;
 #load "meow_hash.jai";
 #load "user_messages.jai";
 #load "deferred_actions.jai";
+#load "snippets.jai";
 
 #load "widgets/generic_choice_dialog.jai";
 #load "widgets/generic_confirm_dialog.jai";
@@ -980,6 +983,7 @@ focus_allocator: Allocator;
 #load "widgets/language_dialog.jai";
 #load "widgets/color_preview.jai";
 #load "widgets/color_picker.jai";
+#load "widgets/snippet_dialog.jai";
 
 #load "langs/common.jai";
 #load "langs/adoc.jai";

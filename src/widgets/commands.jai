@@ -207,7 +207,8 @@ base_commands := #run -> [] Command {
     ];
 
     pkruszec_commands := Command.[
-        cmd("Mkdir Here", .pkruszec_mkdir_here, .None),
+        cmd("Mkdir Here", .pkruszec_mkdir_here, .None), // TODO
+        cmd("Insert Snippet", .pkruszec_insert_snippet, .Single),
     ];
 
     result: [..] Command;

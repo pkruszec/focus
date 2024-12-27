@@ -78,6 +78,7 @@ draw_frame :: () {
         case .commands_dialog;                  draw_commands_dialog();
         case .theme_dialog;                     draw_theme_dialog();
         case .language_dialog;                  draw_language_dialog();
+        case .snippet_dialog;                   draw_snippet_dialog();
         case .kill_running_command_dialog;      draw_kill_running_command_dialog();
     }
 
@@ -123,7 +124,7 @@ draw_welcome_screen :: (main_area: Rect) {
         draw_rounded_rect(circle, Color.BACKGROUND_3, radius = circle.w / 2, set_shader = false);
 
         font := font_ui_big;
-        version_text := tprint("Version %", VERSION);
+        version_text := tprint("custom built (%)", VERSION);
         version_width := cast(float) Simp.prepare_text(font, version_text);
         if version_width / info_area.w > 0.8 {
             font = font_ui;
@@ -2448,6 +2449,10 @@ draw_language_dialog :: () {
     draw_generic_choice_dialog(*language_dialog, Ui_Id.language_dialog, " Choose language syntax", draw_extra_entry_stuff);
 }
 
+draw_snippet_dialog :: () {
+    draw_generic_choice_dialog(*snippet_dialog, Ui_Id.snippet_dialog, " Choose snippet", null);
+}
+
 draw_commands_dialog :: () {
 
     draw_extra_entry_stuff :: (entry_ptr: *void, entry_rect: Rect, name_width: float, pen: Vector2, margin: float, padding: float) {
@@ -3949,6 +3954,7 @@ Ui_Id :: enum s64 {
     theme_dialog                :: -17;
     language_dialog             :: -18;
     color_picker_dialog         :: -19;
+    snippet_dialog              :: -20;
 
     // The rest will be derived from loc
 }

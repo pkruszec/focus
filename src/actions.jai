@@ -194,6 +194,7 @@ ACTIONS_EDITORS :: #run arrays_concat(ACTIONS_COMMON, string.[
     "reload_from_disk",
 
     "pkruszec_mkdir_here",
+    "pkruszec_insert_snippet",
 ]);
 
 ACTIONS_OPEN_FILE_DIALOG :: #run arrays_concat(ACTIONS_COMMON, string.[
