@@ -66,7 +66,11 @@ get_next_token :: (using tokenizer: *Adoc_Tokenizer) -> Token {
 
 parse_comment :: (using tokenizer: *Tokenizer, token: *Token) {
     slash_count := try_to_eat(tokenizer, #char "/");
-    if slash_count < 2 return;
+    if slash_count < 2 {
+        token.type = .default;
+        t += 1;
+        return;
+    }
 
     if slash_count >= 4 {
         token.type = .multiline_comment;

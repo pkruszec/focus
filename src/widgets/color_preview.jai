@@ -321,11 +321,11 @@ get_language_sample_text :: (lang: Buffer.Lang) -> string {
         case .Markdown;          return SAMPLE_Markdown;
         case .Batch;             return SAMPLE_Batch;
         case .Swift;             return SAMPLE_Swift;
+        case .Adoc;              return SAMPLE_Adoc;
 
         case .Plain_Text;        #through;
         case .Focus_Config;      #through;
         case .Focus_Theme;       #through;
-        case .Adoc;              #through;
         case .Focus_Build_Panel;
             panic("Attempted to get a sample for an unsupported buffer language %. This is a bug.", lang);
     }

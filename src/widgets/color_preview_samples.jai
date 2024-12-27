@@ -1118,3 +1118,20 @@ myCar.startEngine()
 myCar.stopEngine()
 
 SWIFT
+
+SAMPLE_Adoc :: #string ADOC
+[#Example-Adoc-Document]
+= Example Adoc Document
+:revdate: 2025-01-01
+
+== Level 2 Heading
+=== Level 3 Heading
+
+:leveloffset: +1
+
+// Now, level 1 headings become level 2 headings, and so on.
+= Some included Stuff
+include::a/b.adoc[]
+
+:leveloffset: -1
+ADOC
