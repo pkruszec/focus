@@ -50,7 +50,6 @@ get_next_token :: (using tokenizer: *Adoc_Tokenizer) -> Token {
         case #char "="; parse_heading(tokenizer, *token);
         case #char "/"; parse_comment(tokenizer, *token);
         case #char "["; parse_annotation(tokenizer, *token);
-        case #char ":"; parse_variable(tokenizer, *token);
         case;
             token.type = .default;
             t += 1;
@@ -103,31 +102,6 @@ parse_annotation :: (using tokenizer: *Tokenizer, token: *Token) {
     token.type = .number;
     t += 1;
     while t < max_t && t.* != #char "\n" t += 1;
-}
-
-parse_variable :: (using tokenizer: *Tokenizer, token: *Token) {
-    t += 1;
-    if t >= max_t return;
-
-    got_closing_before_newline := false;
-    i := 0;
-    while t + i < max_t && t.* != #char "\n" {
-        if (t + i).* == #char ":" {
-            got_closing_before_newline = true;
-            break;
-        }
-        i += 1;
-    }
-
-    if !got_closing_before_newline {
-        token.type = .default;
-        return;
-    }
-
-    token.type = .function;
-    // t += 1;
-    while t < max_t && t.* != #char ":" t += 1;
-    t += 1;
 }
 
 try_to_eat :: (using tokenizer: *Tokenizer, $c: u8) -> int {
