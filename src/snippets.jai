@@ -8,17 +8,18 @@ Snippet :: struct {
 
 SNIPPETS :: Snippet.[
     Snippet.{"adoc", adoc},
+    Snippet.{"cm", cm},
 ];
 
 #scope_file
 
 adoc :: () -> string, int {
-    template_without_annotation :: #string DONE
+    template_without_annotation :: #string ADOC
 =
 :revdate: %-%-%
 :author: Paweł Kruszec
 :email: pakruszec@gmail.com
-    DONE;
+    ADOC
     template_annotation :: "[#%]\n";
     template_with_annotation :: #run join(template_annotation, template_without_annotation);
     added_offset :: 1;
@@ -32,6 +33,7 @@ adoc :: () -> string, int {
     _, buffer := get_active_editor_and_buffer();
     if !buffer return "", 0;
 
+    // TODO: Simplify this code
     file_name := buffer.file.name;
     if file_name == "" {
         str := tprint(template_without_annotation, FormatInt.{minimum_digits = 4, value = year}, FormatInt.{minimum_digits = 2, value = month}, FormatInt.{minimum_digits = 2, value = day});
@@ -48,4 +50,19 @@ adoc :: () -> string, int {
 
         return str, added_count + added_offset;
     }
+}
+
+cm :: () -> string, int {
+    TEMPLATE :: #string CPP
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    return 0;
+}
+    CPP;
+    return TEMPLATE, TEMPLATE.count - 16;
 }
