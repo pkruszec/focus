@@ -368,6 +368,7 @@ Tag :: struct {
     type: Token_Type;
 }
 
+/*
 tags :: #run -> [] Tag {
     tags: [..] Tag;
     array_add(*tags, .{"<sub>", "</sub>", .number} );
@@ -375,3 +376,11 @@ tags :: #run -> [] Tag {
     array_add(*tags, .{"<!--",  "-->",    .comment} );
     return tags;
 }
+*/
+
+tags :: Tag.[
+    .{"<sub>", "</sub>", .number},
+    .{"<sup>", "</sup>", .number},
+    .{"<!--",  "-->",    .comment},
+];
+

@@ -7,12 +7,12 @@ Snippet :: struct {
 }
 
 SNIPPETS :: Snippet.[
-    Snippet.{"Adoc Header", adoc_header},
+    Snippet.{"adoc", adoc},
 ];
 
 #scope_file
 
-adoc_header :: () -> string, int {
+adoc :: () -> string, int {
     template_without_annotation :: #string DONE
 =
 :revdate: %-%-%
@@ -34,7 +34,7 @@ adoc_header :: () -> string, int {
 
     file_name := buffer.file.name;
     if file_name == "" {
-        str := tprint(template_without_annotation, year, month, day);
+        str := tprint(template_without_annotation, FormatInt.{minimum_digits = 4, value = year}, FormatInt.{minimum_digits = 2, value = month}, FormatInt.{minimum_digits = 2, value = day});
         added_count := find_index_from_right(str, #char "=");
         assert(added_count >= 0);
 
@@ -42,7 +42,7 @@ adoc_header :: () -> string, int {
     } else {
         file_name_without_extension := path_strip_extension(file_name);
         annotation := file_name_without_extension;
-        str := tprint(template_with_annotation, annotation, year, month, day);
+        str := tprint(template_with_annotation, annotation, FormatInt.{minimum_digits = 4, value = year}, FormatInt.{minimum_digits = 2, value = month}, FormatInt.{minimum_digits = 2, value = day});
         added_count := find_index_from_right(str, #char "=");
         assert(added_count >= 0);
 

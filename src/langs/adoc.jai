@@ -47,7 +47,6 @@ get_next_token :: (using tokenizer: *Adoc_Tokenizer) -> Token {
     start_t = t;
     char := t.*;
     if char == {
-        case #char "="; parse_heading(tokenizer, *token);
         case #char "/"; parse_comment(tokenizer, *token);
         case #char "["; parse_annotation(tokenizer, *token);
         case;
@@ -84,15 +83,6 @@ parse_comment :: (using tokenizer: *Tokenizer, token: *Token) {
         t += 1;
         while t < max_t && t.* != #char "\n" t += 1;
     }
-}
-
-parse_heading :: (using tokenizer: *Tokenizer, token: *Token) {
-    heading_count := try_to_eat(tokenizer, #char "=");
-    assert(heading_count >= 1);
-
-    token.type = .type;
-    t += 1;
-    while t < max_t && t.* != #char "\n" t += 1;
 }
 
 parse_annotation :: (using tokenizer: *Tokenizer, token: *Token) {
